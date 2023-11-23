@@ -1,0 +1,41 @@
+﻿@model ProfessorModel
+
+@{
+    ViewData["Title"] = "Home - Professor";
+}
+
+<div class="container Quadro-Tela">
+    <div class="text-center" style="padding: 10px">
+        <h2>Olá, @Model.Nome</h2>
+    </div>
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+    <div class="row">
+        <div class="col-12">
+            <div class="d-grid gap-2">
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Professor" asp-action="Criar" asp-route-id="@Model.Id">Cadastrar disciplina</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Professor" asp-action="ListarDisciplinas" asp-route-id="@Model.Id">Listar disciplinas</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Professor" asp-action="VerDados" asp-route-id="@Model.Id">Ver dados do professor</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Professor" asp-action="Editar" asp-route-id="@Model.Id">Alterar dados do professor</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Login" asp-action="Sair">Sair</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+﻿@using ProjetoEscolaMJV.Models
+@using ProjetoEscolaMJV.Enums;
+@model AlunoModel
+@{
+    ViewData["Title"] = "Editar Aluno";
+}
+<div class="text-center">
+
+    <h1 class="display-4">Editar dados do Aluno</h1>
+</div>
+
+<form asp-controller="Aluno" asp-action="Editar" method="post" class="Quadro-Tela">
+
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group" style="margin: 10px 0px">
+        <label for="nome">Nome</label>
+        <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o nome do aluno">
+        @Html.ValidationMessageFor(x => x.Nome)
+    </div>
+    <div class="form-group" style="margin: 10px 0px">
+        <label for="email">E-mail</label>
+        <input type="email" asp-for="Email" class="form-control" placeholder="Digite o e-mail do aluno">
+        @Html.ValidationMessageFor(x => x.Email)
+    </div>
+    <div class="form-group" style="margin: 10px 0px">
+        <label for="login">Login</label>
+        <input type="text" asp-for="Login" class="form-control" placeholder="Digite o login do aluno">
+        @Html.ValidationMessageFor(x => x.Login)
+    </div>
+    <div class="form-group" style="margin: 10px 0px">
+        <label for="perfil">Série do aluno: </label>
+        <select asp-for="Serie" class="form-control">
+            <option value="">Selecione</option>
+            <option value="@Series.PrimeiroAno">1º Ano</option>
+            <option value="@Series.SegundoAno">2º Ano</option>
+            <option value="@Series.TerceiroAno">3º Ano</option>
+        </select>
+        @Html.ValidationMessageFor(x => x.Serie)
+    </div>
+
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <button type="submit" class="btn btn-primary d-lg-block">Editar</button>
+    </div>
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <a class="btn btn-secondary btn-block" asp-controller="Aluno" asp-action="Index" asp-route-id="@Model.Id" role="button">Voltar</a>
+    </div>
+</form>

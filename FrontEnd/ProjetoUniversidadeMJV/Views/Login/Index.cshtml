@@ -1,0 +1,62 @@
+﻿@model LoginModel
+
+@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Login";
+}
+
+<div class="login">
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+            
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+            
+        </div>
+    }
+    <form asp-controller="Login" asp-action="Entrar" method="post">
+        <div class="mb-3">
+            <label><strong>Tipo de login:</strong></label>
+            <br />
+            <div class="form-check form-check-inline" style="margin-right: 100px; margin-left:80px; margin-top: 15px">
+                <input class="form-check-input" type="radio" asp-for="Tipo" value="Aluno" checked>
+                <label class="form-check-label">Aluno</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" asp-for="Tipo" value="Professor">
+                <label class="form-check-label">Professor</label>
+            </div>
+            @Html.ValidationMessageFor(x => x.Tipo)
+        </div>
+        <div class="mb-3">
+            <label for="login" class="form-label"><strong>Login</strong></label>
+            <input type="text" asp-for="Login" class="form-control" id="login" placeholder="Insira seu login">
+            @Html.ValidationMessageFor(x => x.Login)
+        </div>
+        <div class="mb-3">
+            <label for="senha" class="form-label"><strong>Senha</strong></label>
+            <input type="password" asp-for="Senha" class="form-control" id="senha" placeholder="Insira sua senha">
+            @Html.ValidationMessageFor(x => x.Senha)
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block"><strong>Entrar</strong></button>
+    </form>
+    <div class="mb-3 cadastrar">
+        Ainda não tem conta? <strong><a class="link_cadastrar" asp-controller="Login" asp-action="EscolhaPerfil">Cadastre-se</a></strong>
+
+    </div>
+</div>
+

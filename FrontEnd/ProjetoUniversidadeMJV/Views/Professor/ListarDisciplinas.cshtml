@@ -1,0 +1,91 @@
+﻿@model ProfessorModel
+@{
+    ViewData["Title"] = "Listagem de Disciplinas";
+}
+<div class="text-center Quadro-Tela">
+
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    <br />
+    <h1 class="display-4">Listagem de disciplinas</h1>
+    <table class="table" id="table-disciplinas">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Disciplina</th>
+                <th scope="col">Série</th>
+                <th scope="col">Professor</th>
+                <th scope="col">Status</th>
+                @if (Model.Disciplinas.Count() > 0)
+                {
+                    <th scope="col"></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Disciplinas != null && Model.Disciplinas.Any())
+            {
+                foreach (var disciplina in Model.Disciplinas)
+                {
+                    <tr>
+                        <th scope="row">@disciplina.Id</th>
+                        <td>@disciplina.Nome</td>
+                        @if (disciplina.Serie == ProjetoEscolaMJV.Enums.Series.PrimeiroAno)
+                        {
+                            <td>
+                                1º Ano
+                            </td>
+                        }
+                        else if (disciplina.Serie == ProjetoEscolaMJV.Enums.Series.SegundoAno)
+                        {
+                            <td>
+                                2º Ano
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                3º Ano
+                            </td>
+                        }
+
+                        <td>@Model.Nome</td>
+                        <td>@(disciplina.Status == true ? "Em Andamento" : "Concluída") </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-primary" asp-route-disciplineId="@disciplina.Id" asp-route-teacherId="@Model.Id" asp-controller="Professor" asp-action="DetalhesDisciplina">Ver disciplina</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="odd"><td valign="top" colspan="5">Nenhuma disciplina encontrado</td></tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <a class="btn btn-secondary btn-block" asp-controller="Professor" asp-action="Index" asp-route-id="@Model.Id" role="button">Voltar</a>
+    </div>
+</div>

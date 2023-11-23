@@ -1,0 +1,29 @@
+﻿@using ProjetoEscolaMJV.Enums
+@model ProfessorModel
+
+<div class="container mt-5 Quadro-Dados">
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th width="22%">Nome:</th>
+                <td colspan="3">@Model.Nome</td>
+            </tr>
+            <tr>
+                <th>E-mail:</th>
+                <td colspan="3">@Model.Email</td>
+            </tr>
+            <tr>
+                <th width="22%">Login:</th>
+                <td colspan="3">@Model.Login</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row justify-content-center">
+        
+            <a class="btn btn-block botoes_dados" asp-controller="Professor" asp-action="Editar" asp-route-id="@Model.Id" role="button">Editar</a>
+        
+        <a class="btn btn-block botoes_dados" asp-controller="Professor" asp-action="Index" asp-route-id="@Model.Id" role="button">Voltar</a>
+        
+     </div>
+    
+</div>

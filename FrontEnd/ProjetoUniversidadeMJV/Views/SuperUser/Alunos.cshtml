@@ -1,0 +1,85 @@
+﻿@using ProjetoEscolaMJV.Enums 
+@model List<AlunoModel>
+@{
+    ViewData["Title"] = "Listagem de Alunos";
+}
+<div class="text-center Quadro-Tela" style="width: auto;">
+
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    <br />
+    <h5 class="display-4">Lista de alunos</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Login</th>
+                <th scope="col">Email</th>
+                <th scope="col">Serie</th>
+                <th scope="col">Matrículas</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var aluno in Model)
+                {
+                    <tr>
+                        <th scope="row">@aluno.Id</th>
+                        <td>@aluno.Nome</td>
+                        <td>@aluno.Login</td>
+                        <td>@aluno.Email</td>
+                        @if (aluno.Serie == Series.PrimeiroAno)
+                        {
+                            <td>1º Ano</td>
+                        }
+                        else if (aluno.Serie == Series.SegundoAno)
+                        {
+                            <td>2º Ano</td>
+                        }
+                        else
+                        {
+                            <td>3º Ano</td>
+                        }
+                        <td>@aluno.Matriculas.Count()</td>
+                        <></>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-danger" asp-controller="SuperUser" asp-action="StudentDelete" asp-route-studentId="@aluno.Id" asp-route-nameStudent="@aluno.Nome">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="odd"><td valign="top" colspan="5">Nenhum aluno encontrado</td></tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <a class="btn btn-secondary btn-block" asp-controller="SuperUser" asp-action="Home" role="button">Voltar</a>
+    </div>
+</div>

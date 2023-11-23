@@ -1,0 +1,98 @@
+﻿@model List<MatriculaModel>
+@{
+    var status = Convert.ToBoolean(ViewBag.status as string);
+    var disciplineId = Convert.ToInt32(ViewBag.disciplineId as string);
+    var disciplina = ViewBag.NomeDisciplina as string;
+    var professor = ViewBag.NomeProfessor as string;
+    var teacherId = Convert.ToInt32(ViewBag.teacherId as string);
+    ViewData["Title"] = "Notas da Disciplina";
+}
+<div class="container mt-5 Quadro-Notas">
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    <br />
+    <h4 class="display-8"><strong>Disciplina: @disciplina</strong></h4>
+    <h4 class="display-8"><strong>Professor: @professor</strong></h4>
+    <table class="table" style="width: 700px;">
+        <thead style="width: auto;">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">NP1</th>
+                <th scope="col">NP2</th>
+                <th scope="col">NP3</th>
+                <th scope="col">NP4</th>
+                <th scope="col">Média Final</th>
+                @if (status)
+                {
+                    <td scope="col"></td>
+                }
+            </tr>
+        </thead>
+        <tbody style="width: 620px;">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var matricula in Model)
+                {
+                    <tr>
+                        <th scope="row">@matricula.Aluno.Id</th>
+                        <td>@matricula.Aluno.Nome</td>
+                        <td id="nota1">@matricula.Nota1.ToString()</td>
+                        <td>@matricula.Nota2</td>
+                        <td>@matricula.Nota3</td>
+                        <td>@matricula.Nota4</td>
+                        <td>@matricula.MediaFinal</td>
+                        @if (status)
+                        {
+                            <td><a class="btn btn-secondary btn-block" asp-controller="Professor" asp-action="LancarNotas" asp-route-disciplineId="@disciplineId" asp-route-teacherId="@teacherId" asp-route-nameTeacher="@professor" asp-route-matriculaId="@matricula.Id" role="button">Lançar notas</a></td>
+                        }
+                    </tr>
+                }
+                <br />
+
+            }
+            else
+            {
+                <tr class="odd"><td valign="top" colspan="5">Nenhum aluno matriculado nessa disciplina</td></tr>
+            }
+        </tbody>
+
+    </table>
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        @if (Model != null)
+        {
+            @if (status)
+            {
+                <a class="btn btn-secondary btn-block" asp-controller="Professor" asp-action="UpdateStatus" asp-route-disciplineId="@disciplineId" asp-route-teacherId="@teacherId" asp-route-nameTeacher="@professor" asp-route-staus="@status" role="button">Consolidar disciplina</a>
+            }
+            else
+            {
+                <a class="btn btn-secondary btn-block" asp-controller="Professor" asp-action="UpdateStatus" asp-route-disciplineId="@disciplineId" asp-route-teacherId="@teacherId" asp-route-nameTeacher="@professor" asp-route-staus="@status" role="button">Reabrir disciplina</a>
+            }
+        }
+    </div>
+
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <a class="btn btn-secondary btn-block" asp-controller="Professor" asp-action="DetalhesDisciplina" asp-route-disciplineId="@disciplineId" asp-route-teacherId="@teacherId" role="button">Voltar</a>
+    </div>
+</div>
+

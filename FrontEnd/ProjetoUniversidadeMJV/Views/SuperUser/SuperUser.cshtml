@@ -1,0 +1,47 @@
+﻿@using ProjetoEscolaMJV.Models
+
+@model SuperUserModel
+
+@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Login";
+}
+
+<div class="login">
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+
+        </div>
+    }
+    <form asp-controller="SuperUser" asp-action="EntrarSuperUser" method="post">
+       <div class="mb-3">
+            <label for="login" class="form-label"><strong>Login</strong></label>
+            <input type="text" asp-for="Login" class="form-control" id="login" placeholder="Insira seu login">
+            @Html.ValidationMessageFor(x => x.Login)
+        </div>
+        <div class="mb-3">
+            <label for="senha" class="form-label"><strong>Senha</strong></label>
+            <input type="password" asp-for="Senha" class="form-control" id="senha" placeholder="Insira sua senha">
+            @Html.ValidationMessageFor(x => x.Senha)
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block"><strong>Entrar</strong></button>
+    </form>
+</div>
+

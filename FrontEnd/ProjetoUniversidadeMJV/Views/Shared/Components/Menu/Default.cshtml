@@ -1,0 +1,107 @@
+﻿@{
+    var id = Convert.ToInt32(ViewBag.Id as string);
+    var nome = ViewBag.Nome as string;
+    var perfil = Convert.ToInt32(ViewBag.Perfil as string);
+}
+
+@if (perfil == 1)
+{
+    <a class="navbar-brand" asp-area="" asp-controller="Aluno" asp-action="Index" asp-route-id="@id">Olá, @nome</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav me-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Aluno" asp-action="DisciplinasMatriculadas" asp-route-id="@id">
+                    Disciplinas Matriculadas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="Aluno" asp-action="ListarDisciplinas" asp-route-id="@id">
+                    Lista de Disciplinas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="Aluno" asp-action="VerDados" asp-route-id="@id">
+                    Dados do aluno
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="Login" asp-action="Sair">
+                    Sair
+                </a>
+            </li>
+        </ul>
+    </div>
+}
+else if (perfil == 2)
+{
+    <a class="navbar-brand" asp-area="" asp-controller="Professor" asp-action="Index" asp-route-id="@id">Olá, @nome</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav me-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="Professor" asp-action="Criar" asp-route-id="@id">
+                    Cadastrar disciplina
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="Professor" asp-action="ListarDisciplinas" asp-route-id="@id">
+                    Lista de Disciplinas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="Professor" asp-action="VerDados" asp-route-id="@id">
+                    Dados do professor
+                </a>
+            </li>
+            
+        </ul>
+        <div style="margin-right: 4%;  " class="navbar-nav nav-item">
+            <a class="nav-link " asp-area="" asp-controller="Login" asp-action="Sair">
+                Sair
+            </a>
+        </div>
+    </div>
+}else{
+    <a class="navbar-brand" asp-area="" asp-controller="Professor" asp-action="Index">Olá, @nome</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav me-auto">
+
+            <li class="nav-item">
+                <a class="nav-link" asp-area="" asp-controller="SuperUser" asp-action="Professores">
+                    Professores
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="SuperUser" asp-action="ALunos">
+                    Alunos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="SuperUser" asp-action="Disciplinas">
+                    Disciplinas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " asp-area="" asp-controller="SuperUser" asp-action="Matriculas">
+                    Matriculas
+                </a>
+            </li>
+
+        </ul>
+        <div style="margin-right: 4%;  " class="navbar-nav nav-item">
+            <a class="nav-link " asp-area="" asp-controller="Login" asp-action="Sair">
+                Sair
+            </a>
+        </div>
+    </div>
+}

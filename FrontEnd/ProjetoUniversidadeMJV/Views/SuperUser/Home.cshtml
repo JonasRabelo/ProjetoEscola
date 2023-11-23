@@ -1,0 +1,39 @@
+﻿@model SuperUserModel
+
+@{
+    ViewData["Title"] = "Home - Super Usuário";
+}
+
+<div class="container Quadro-Home">
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+    <div class="row">
+        <div class="col-12">
+            <div class="d-grid gap-2">
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="SuperUser" asp-action="Professores" >Professores</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="SuperUser" asp-action="Alunos">Alunos</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="SuperUser" asp-action="Disciplinas">Disciplinas</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="SuperUser" asp-action="Matriculas">Matriculas</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Login" asp-action="">Sair</a>
+            </div>
+        </div>
+    </div>
+</div>

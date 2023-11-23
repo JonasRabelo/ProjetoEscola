@@ -1,0 +1,42 @@
+﻿@using ProjetoEscolaMJV.Models
+@model AlunoModel
+
+@{
+    ViewData["Title"] = "Home - Aluno";
+}
+<div class="text-center" style="padding: 10px">
+    <h2>Olá, @Model.Nome</h2>
+</div>
+<div class="container Quadro-Tela">
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-12">
+            <div class="d-grid gap-2">
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Aluno" asp-action="DisciplinasMatriculadas" asp-route-id="@Model.Id">Disciplinas Matrículadas</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Aluno" asp-action="ListarDisciplinas" asp-route-id="@Model.Id">Listar disciplinas</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Aluno" asp-action="VerDados" asp-route-id="@Model.Id">Ver dados do aluno</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Aluno" asp-action="Editar" asp-route-id="@Model.Id">Alterar dados do aluno</a>
+                <a class="btn btn-lg btn-primary" type="button" asp-controller="Login" asp-action="Sair">Sair</a>
+            </div>
+        </div>
+    </div>
+</div>

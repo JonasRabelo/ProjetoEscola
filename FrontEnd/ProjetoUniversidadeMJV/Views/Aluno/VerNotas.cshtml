@@ -1,0 +1,55 @@
+﻿@using ProjetoEscolaMJV.Models
+@model List<MatriculaModel>
+@{
+    var disciplina = ViewBag.NomeDisciplina as string;
+    var professor = ViewBag.NomeProfessor as string;
+    var idStudent = Convert.ToInt32(ViewBag.Id as string);
+    ViewData["Title"] = "Notas da Disciplina";
+}
+<div class="container mt-5 Quadro-Notas">
+
+    <!-- ... (Código existente para mensagens de sucesso/erro) ... -->
+
+    <br />
+    <h4 class="display-8"><strong>Disciplina: @disciplina</strong></h4>
+    <h4 class="display-8"><strong>Professor: @professor</strong></h4>
+    <table class="table" style="width: 700px;">
+        <thead style="width: auto;">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">NP1</th>
+                <th scope="col">NP2</th>
+                <th scope="col">NP3</th>
+                <th scope="col">NP4</th>
+                <th scope="col">Média Final</th>
+            </tr>
+        </thead>
+        <tbody style="width: 620px;">
+            @if (Model != null && Model.Any())
+            {
+                foreach (var matricula in Model)
+                {
+                    <tr>
+                        <th scope="row">@matricula.Aluno.Id</th>
+                        <td>@matricula.Aluno.Nome</td>
+                        <td id="nota1">@matricula.Nota1.ToString()</td>
+                        <td>@matricula.Nota2</td>
+                        <td>@matricula.Nota3</td>
+                        <td>@matricula.Nota4</td>
+                        <td>@matricula.MediaFinal</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="odd"><td valign="top" colspan="5">Nenhum aluno matriculado nessa disciplina</td></tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <a class="btn btn-secondary btn-block" asp-controller="Aluno" asp-action="DisciplinasMatriculadas" asp-route-id="@idStudent" role="button">Voltar</a>
+    </div>
+</div>
+

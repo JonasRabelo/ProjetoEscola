@@ -1,0 +1,78 @@
+﻿@using ProjetoEscolaMJV.Enums
+@using ProjetoEscolaMJV.Models
+@model DisciplinaModel
+
+@{
+    var teacherId = Convert.ToInt32(ViewBag.teacherId as string);
+}
+
+<div class="container mt-5">
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th width="22%">Disciplina:</th>
+                <td colspan="3">@Model.Nome</td>
+            </tr>
+            <tr>
+                <th>Professor:</th>
+                <td colspan="3">@Model.Professor!.Nome</td>
+            </tr>
+            <tr>
+                <th width="22%">Série:</th>
+                @if (Model.Serie == ProjetoEscolaMJV.Enums.Series.PrimeiroAno)
+                {
+                    <td>
+                        1º Ano
+                    </td>
+                }
+                else if (Model.Serie == ProjetoEscolaMJV.Enums.Series.SegundoAno)
+                {
+                    <td>
+                        2º Ano
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        3º Ano
+                    </td>
+                }
+            </tr>
+            <tr>
+                <th width="22%">Status:</th>
+                <td>@(Model.Status == true ? "Em Andamento" : "Concluída") </td>
+            </tr>
+            <tr>
+                <th width="22%">Alunos matriculados:</th>
+                <td>@Model.Matriculas!.Count() </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <div class="row justify-content-center">
+
+        <a class="btn btn-block botoes_dados" asp-controller="Professor" asp-action="VerNotas" asp-route-disciplineId="@Model.Id" asp-route-teacherId="@teacherId" asp-route-nameTeacher="@Model.Professor.Nome" role="button">Ver Notas</a>
+        <a class="btn btn-block botoes_dados" asp-controller="Professor" asp-action="ListarDisciplinas" asp-route-id="@teacherId" role="button">Voltar</a>
+
+    </div>
+
+</div>

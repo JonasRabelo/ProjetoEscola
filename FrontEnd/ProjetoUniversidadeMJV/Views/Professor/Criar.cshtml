@@ -1,0 +1,31 @@
+﻿@using ProjetoEscolaMJV.Enums;
+@model DisciplinaModel
+@{
+    var professorId = Convert.ToInt32(ViewBag.ProfessorId as string); 
+}
+
+<form asp-controller="Professor" asp-action="Criar" method="post" class="Quadro-Tela">
+    <input type="hidden" name="professorId" value="@professorId" />
+    <div class="form-group" style="margin: 10px 0px">
+        <label for="nome">Nome da disciplina</label>
+        <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o nome da disciplina">
+        @Html.ValidationMessageFor(x => x.Nome)
+    </div>
+    <div class="form-group" style="margin: 10px 0px">
+        <label for="perfil">Série da disciplina: </label>
+        <select asp-for="Serie" class="form-control">
+            <option value="">Selecione</option>
+            <option value="@Series.PrimeiroAno">1º Ano</option>
+            <option value="@Series.SegundoAno">2º Ano</option>
+            <option value="@Series.TerceiroAno">3º Ano</option>
+        </select>
+        @Html.ValidationMessageFor(x => x.Serie)
+    </div>
+
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <button type="submit" class="btn btn-primary d-lg-block">Adicionar</button>
+    </div>
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <a class="btn btn-secondary btn-block" asp-controller="Professor" asp-action="Index" asp-route-id="@professorId" role="button">Voltar</a>
+    </div>
+</form>

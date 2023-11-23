@@ -1,0 +1,61 @@
+﻿﻿@{
+    ViewData["Title"] = "Escolha do tipo de usuário";
+}
+
+<div class="text-center">
+    <h3>Escolha o tipo de usuário que deseja cadastrar: </h3>
+</div>
+<div class="Quadro-Escolha">
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-6 escolha">
+            <div class="d-grid gap-2" style="margin: 5px 0px">
+
+                <a role="button" asp-controller="Login" asp-action="CadastrarProfessor">
+                    <img src="/professor.webp" alt="Professor" class="img-fluid" />
+
+                </a>
+                <a class="btn btn-primary btn-block professor_buttom" role="button" asp-controller="Login" asp-action="CadastrarProfessor">
+                    Professor
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6 escolha">
+            <div class="d-grid gap-2" style="margin: 5px 0px">
+                <a role="button" asp-controller="Login" asp-action="CadastrarAluno">
+                    <img src="/aluno.png" class="img-fluid" alt="Aluno"  />
+                </a>
+                <a class="btn btn-danger btn-block" role="button" asp-controller="Login" asp-action="CadastrarAluno">
+                    Aluno
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 30px">
+        <div class="col-md-12">
+            <div class="d-grid gap-2" style="margin: 5px 0px">
+                <a class="btn btn-secondary btn-block" asp-controller="Login" asp-action="Index" role="button">Voltar</a>
+            </div>
+        </div>
+    </div>
+</div>

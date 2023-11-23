@@ -1,0 +1,71 @@
+﻿@model List<ProfessorModel>
+@{
+    ViewData["Title"] = "Listagem de Professores";
+}
+<div class="text-center Quadro-Tela">
+
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    <br />
+    <h5 class="display-4">Lista de professores</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Login</th>
+                <th scope="col">Email</th>
+                <th scope="col">Disciplinas</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var professor in Model)
+                {
+                    <tr>
+                        <th scope="row">@professor.Id</th>
+                        <td>@professor.Nome</td>
+                        <td>@professor.Login</td>
+                        <td>@professor.Email</td>
+                        <td>@professor.Disciplinas.Count()</td>
+                        <></>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" class="btn btn-danger" asp-controller="SuperUser" asp-action="TeacherDelete" asp-route-teacherId="@professor.Id" asp-route-nameTeacher="@professor.Nome">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="odd"><td valign="top" colspan="5">Nenhum professor encontrado</td></tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-grid gap-2" style="margin: 5px 0px">
+        <a class="btn btn-secondary btn-block" asp-controller="SuperUser" asp-action="Home" role="button">Voltar</a>
+    </div>
+</div>

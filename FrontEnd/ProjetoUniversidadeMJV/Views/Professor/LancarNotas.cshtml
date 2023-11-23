@@ -1,0 +1,73 @@
+﻿@model MatriculaModel
+
+@{
+    var disciplineId = Convert.ToInt32(ViewBag.disciplineId as string);
+    var disciplina = ViewBag.NomeDisciplina as string;
+    var professor = ViewBag.NomeProfessor as string;
+    var teacherId = Convert.ToInt32(ViewBag.teacherId as string);
+    ViewData["Title"] = "Notas da Disciplina";
+}
+
+<div class="container mt-5 Quadro-Notas">
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+            <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">
+                X
+            </button>
+        </div>
+    }
+
+    <br />
+    <h4 class="display-8"><strong>Disciplina: @disciplina</strong></h4>
+    <h4 class="display-8"><strong>Professor: @professor</strong></h4>
+
+    <form method="post" asp-controller="Professor" asp-action="LancarNotas" asp-route-disciplineId="@disciplineId" asp-route-teacherId="@teacherId" asp-route-nameTeacher="@professor">
+        <table class="table" style="width: 700px;">
+            <thead style="width: auto;">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">NP1</th>
+                    <th scope="col">NP2</th>
+                    <th scope="col">NP3</th>
+                    <th scope="col">NP4</th>
+                </tr>
+            </thead>
+            <tbody style="width: 620px;">
+                <tr>
+                    <th scope="row">@Model.Aluno.Id</th>
+                    <input type="hidden" asp-for="Id" value="@Model.Id"/>
+                    <input type="hidden" asp-for="AlunoId" value="@Model.AlunoId"/>
+                    <input type="hidden" asp-for="Disciplina" value="@Model.DisciplinaId"/>
+                    <td>@Model.Aluno.Nome</td>
+                    <td><input type="number" asp-for="Nota1" style="width: 80px;" /></td>
+                    @Html.ValidationMessageFor(x => x.Nota1)
+                    <td><input type="number" asp-for="Nota2" style="width: 80px;" /></td>
+                    @Html.ValidationMessageFor(x => x.Nota2)
+                    <td><input type="number" asp-for="Nota3" style="width: 80px;" /></td>
+                    @Html.ValidationMessageFor(x => x.Nota3)
+                    <td><input type="number" asp-for="Nota4" style="width: 80px;" /></td>
+                    @Html.ValidationMessageFor(x => x.Nota4)
+                    <input type="hidden" asp-for="MediaFinal" value="@Model.MediaFinal"/>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="d-grid gap-2" style="margin: 5px 0px">
+            <button type="submit" class="btn btn-secondary btn-block">Salvar Notas</button>
+            <a class="btn btn-secondary btn-block" asp-controller="Professor" asp-action="VerNotas" asp-route-disciplineId="@disciplineId" asp-route-teacherId="@teacherId" asp-route-nameTeacher="@professor" role="button">Voltar</a>
+        </div>
+    </form>
+</div>
