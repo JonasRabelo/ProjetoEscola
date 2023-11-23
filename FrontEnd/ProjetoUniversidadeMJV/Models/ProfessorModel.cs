@@ -19,7 +19,6 @@ namespace ProjetoEscolaMJV.Models
         [Required(ErrorMessage = "O e-mail informado não é válido!")]
         [EmailAddress(ErrorMessage = "O e-mail informado não é válido!")]
         public string Email { get; set; }
-        public Perfil? Perfil { get; set; }
         public DateTime DataDeCadastro { get; set; }
         public DateTime? DataDeAtualizacao { get; set; }
 

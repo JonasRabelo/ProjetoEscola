@@ -83,3 +83,4 @@ J:\ProjetoEscola\API.ProjetoEscola\API.ProjetoEscola\obj\Debug\net7.0\refint\API
 J:\ProjetoEscola\API.ProjetoEscola\API.ProjetoEscola\obj\Debug\net7.0\API.ProjetoEscola.pdb
 J:\ProjetoEscola\API.ProjetoEscola\API.ProjetoEscola\obj\Debug\net7.0\API.ProjetoEscola.genruntimeconfig.cache
 J:\ProjetoEscola\API.ProjetoEscola\API.ProjetoEscola\obj\Debug\net7.0\ref\API.ProjetoEscola.dll
+J:\ProjetoEscola\API.ProjetoEscola\API.ProjetoEscola\obj\Debug\net7.0\API.ProjetoEscola.sourcelink.json

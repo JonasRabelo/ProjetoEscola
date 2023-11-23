@@ -22,6 +22,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Obtém uma disciplina com base no ID.
         [HttpGet]
         [Route("getbyid/{id}")]
         public IActionResult GetById(int id)
@@ -33,6 +34,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Obtém todas as disciplinas no sistema.
         [HttpGet]
         [Route("getall")]
         public IActionResult GetAll()
@@ -47,6 +49,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Obtém todas as disciplinas associadas a um professor com base no ID do professor.
         [HttpGet]
         [Route("getallbyidteacher/{id}")]
         public IActionResult GetAllByIdTeacher(int id)
@@ -61,6 +64,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Obtém todas as disciplinas de uma determinada série.
         [HttpGet]
         [Route("getallbyserie/{serie}")]
         public IActionResult GetAllBySerie(int serie)
@@ -75,6 +79,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Cria uma nova disciplina.
         [HttpPost]
         [Route("create")]
         public IActionResult Create(DisciplinaModel disciplina)
@@ -95,6 +100,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Atualiza os detalhes de uma disciplina existente.
         [HttpPut]
         [Route("update")]
         public IActionResult Update(DisciplinaModel disciplina)
@@ -115,6 +121,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Atualiza o status de uma disciplina.
         [HttpPut]
         [Route("updatestatus")]
         public IActionResult UpdateStatus(bool status, int id)
@@ -131,6 +138,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Exclui uma disciplina com base no ID.
         [HttpDelete]
         [Route("delete/{id}")]
         public IActionResult Delete(int id)
@@ -140,7 +148,7 @@ namespace API.ProjetoEscola.Controllers
             return StatusCode(500, $"Error in DisciplinaController.Delete");
         }
 
-
+        // Exclui todas as disciplinas associadas a um professor com base no ID do professor.
         [HttpDelete]
         [Route("deletebyidteacher/{id}")]
         public IActionResult DeleteByIdTeacher(int id)

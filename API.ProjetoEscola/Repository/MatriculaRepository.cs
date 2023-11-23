@@ -5,9 +5,24 @@ using Repository.IRepository;
 
 namespace Repository
 {
+    /// <summary>
+    /// Fornece funcionalidades de acesso a dados para gerenciar registros de matrícula em um banco de dados.
+    /// Implementa a interface IMatriculaRepository para lidar com operações relacionadas a matrículas.
+    /// </summary>
     public class MatriculaRepository : IMatriculaRepository<MatriculaModel>
     {
-        private readonly string cs = "server=DESKTOP-MQADPEC\\SQLEXPRESS; database=DB_EscolaMJV; Trusted_Connection = true; Integrated Security=SSPI;TrustServerCertificate=True";
+        private readonly string cs = string.Empty;
+
+        public MatriculaRepository(string connectionString)
+        {
+            cs = connectionString;
+        }
+
+        /// <summary>
+        /// Insere um novo registro de matrícula no banco de dados.
+        /// </summary>
+        /// <param name="entity">Uma instância de MatriculaModel representando os dados da matrícula a serem inseridos.</param>
+        /// <returns>Verdadeiro se a inserção for bem-sucedida; caso contrário, falso.</returns>
         public bool Create(MatriculaModel entity)
         {
             try
@@ -42,6 +57,11 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Exclui um registro de matrícula do banco de dados com base no ID da matrícula fornecido.
+        /// </summary>
+        /// <param name="id">O ID da matrícula a ser excluída.</param>
+        /// <returns>Verdadeiro se a exclusão for bem-sucedida; caso contrário, falso.</returns>
         public bool Delete(int id)
         {
             string query = "DELETE FROM Matriculas WHERE Id = @id";
@@ -66,6 +86,12 @@ namespace Repository
             }
         }
 
+
+        /// <summary>
+        /// Exclui todos os registros de matrícula associados a um ID de disciplina específico.
+        /// </summary>
+        /// <param name="disciplineId">O ID da disciplina para a qual os registros de matrícula correspondentes devem ser excluídos.</param>
+        /// <returns>Verdadeiro se a exclusão for bem-sucedida; caso contrário, falso.</returns>
         public bool DeleteByIdDiscipline(int disciplineId)
         {
             string query = "DELETE FROM Matriculas WHERE disciplinaId = @disciplineId";
@@ -90,6 +116,12 @@ namespace Repository
             }
         }
 
+
+        /// <summary>
+        /// Exclui todos os registros de matrícula associados a um ID de aluno específico.
+        /// </summary>
+        /// <param name="studentId">O ID do aluno para o qual os registros de matrícula devem ser excluídos.</param>
+        /// <returns>Verdadeiro se a exclusão for bem-sucedida; caso contrário, falso.</returns>
         public bool DeleteByIdStudent(int studentId)
         {
             string query = "DELETE FROM Matriculas WHERE alunoId = @studentId";
@@ -114,6 +146,10 @@ namespace Repository
             }
         }
 
+        /// <summary>
+        /// Recupera uma lista de todos os registros de matrícula do banco de dados.
+        /// </summary>
+        /// <returns>Uma lista de MatriculaModel contendo todos os registros de matrícula.</returns>
         public List<MatriculaModel> GetAll()
         {
             List<MatriculaModel> matriculas = new List<MatriculaModel>();
@@ -158,6 +194,11 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Recupera uma lista de registros de matrícula associados a um ID de disciplina específico.
+        /// </summary>
+        /// <param name="id">O ID da disciplina para a qual os registros de matrícula correspondentes devem ser recuperados.</param>
+        /// <returns>Uma lista de MatriculaModel contendo registros de matrícula associados ao ID de disciplina especificado.</returns>
         public List<MatriculaModel> GetAllByIdDiscipline(int id)
         {
             string query = "SELECT Id, nota1, nota2, nota3, nota4, mediaFinal, alunoId, disciplinaId, dataMatricula, dataDeAtualizacao FROM Matriculas WHERE disciplinaId = @id";
@@ -165,6 +206,11 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Recupera uma lista de registros de matrícula associados a um ID de aluno específico.
+        /// </summary>
+        /// <param name="id">O ID do aluno para o qual os registros de matrícula devem ser recuperados.</param>
+        /// <returns>Uma lista de MatriculaModel contendo registros de matrícula associados ao ID de aluno especificado.</returns>
         public List<MatriculaModel> GetAllByIdStudent(int id)
         {
             string query = "SELECT Id, nota1, nota2, nota3, nota4, mediaFinal, alunoId, disciplinaId, dataMatricula, dataDeAtualizacao FROM Matriculas WHERE alunoId = @id";
@@ -172,6 +218,11 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Recupera um objeto MatriculaModel com base no ID da matrícula fornecido.
+        /// </summary>
+        /// <param name="id">O ID da matrícula a ser recuperada.</param>
+        /// <returns>Um objeto MatriculaModel representando o registro de matrícula correspondente ao ID fornecido.</returns>
         public MatriculaModel GetById(int id)
         {
             MatriculaModel matricula = new MatriculaModel();
@@ -214,6 +265,10 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Atualiza os dados de um registro de matrícula no banco de dados.
+        /// </summary>
+        /// <param name="entity">Uma instância de MatriculaModel contendo os dados atualizados da matrícula.</param>
         public void Update(MatriculaModel entity)
         {
             string query = @"UPDATE Matriculas SET nota1 = @nota1, nota2 = @nota2, nota3 = @nota3, nota4 = @nota4, mediaFinal = @mediaFinal, dataDeAtualizacao = @dataDeAtualizacao WHERE Id = @id";
@@ -243,11 +298,11 @@ namespace Repository
             }
         }
 
-
+        // Método privado auxiliar para recuperar registros com base em um query específico e um ID fornecido.
         private List<MatriculaModel> GetAll(string query, int id)
         {
             List<MatriculaModel> matriculas = new List<MatriculaModel>();
-            
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(cs))

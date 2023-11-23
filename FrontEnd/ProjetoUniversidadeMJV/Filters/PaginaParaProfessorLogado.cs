@@ -5,8 +5,15 @@ using ProjetoEscolaMJV.Models;
 
 namespace ProjetoEscolaMJV.Filters
 {
+    // <summary>
+    /// Filtro de ação que redireciona para a página de login se o usuário não estiver autenticado como professor.
+    /// </summary>
     public class PaginaParaProfessorLogado : ActionFilterAttribute
     {
+        /// <summary>
+        /// Executado antes de uma ação ser executada. Verifica se um professor está autenticado e redireciona conforme necessário.
+        /// </summary>
+        /// <param name="context">Contexto da execução da ação.</param>
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             string sessaoAluno = context.HttpContext.Session.GetString("sessaoAluno");

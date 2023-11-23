@@ -12,7 +12,19 @@ namespace Repository
 {
     public class DisciplinaRepository : IDisciplinaRepository<DisciplinaModel>
     {
-        private readonly string cs = "server=DESKTOP-MQADPEC\\SQLEXPRESS; database=DB_EscolaMJV; Trusted_Connection = true; Integrated Security=SSPI;TrustServerCertificate=True";
+        private readonly string cs = string.Empty;
+
+        public DisciplinaRepository(string connectionString)
+        {
+            cs = connectionString;
+        }
+
+
+        /// <summary>
+        /// Cria uma nova disciplina no banco de dados.
+        /// </summary>
+        /// <param name="entity">A disciplina a ser criada.</param>
+        /// <returns>True se a disciplina for criada com sucesso, False caso contrário.</returns>
         public bool Create(DisciplinaModel entity)
         {
             try
@@ -44,6 +56,11 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Exclui uma disciplina com base no ID.
+        /// </summary>
+        /// <param name="id">O ID da disciplina a ser excluída.</param>
+        /// <returns>True se a disciplina for excluída com sucesso, False caso contrário.</returns>
         public bool Delete(int id)
         {
             string query = "DELETE FROM Disciplinas WHERE Id = @id";
@@ -69,6 +86,11 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Obtém todas as disciplinas associadas a um professor com base no ID do professor.
+        /// </summary>
+        /// <param name="id">O ID do professor.</param>
+        /// <returns>Uma lista de disciplinas associadas ao professor.</returns>
         public List<DisciplinaModel> GetAllByIdTeacher(int id)
         {
             List<DisciplinaModel> disciplinas = new List<DisciplinaModel>();
@@ -111,6 +133,10 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Obtém todas as disciplinas no banco de dados.
+        /// </summary>
+        /// <returns>Uma lista de todas as disciplinas.</returns>
         public List<DisciplinaModel> GetAll()
         {
             List<DisciplinaModel> disciplinas = new List<DisciplinaModel>();
@@ -151,7 +177,12 @@ namespace Repository
             return disciplinas;
         }
 
-       
+
+        /// <summary>
+        /// Obtém uma disciplina com base no ID.
+        /// </summary>
+        /// <param name="id">O ID da disciplina.</param>
+        /// <returns>A disciplina encontrada.</returns>
         public DisciplinaModel GetById(int id)
         {
             DisciplinaModel disciplina = new DisciplinaModel();
@@ -190,6 +221,10 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Atualiza uma disciplina no banco de dados.
+        /// </summary>
+        /// <param name="entity">A disciplina a ser atualizada.</param>
         public void Update(DisciplinaModel entity)
         {
             string query = @"UPDATE Disciplinas SET nome = @nome, serie = @serie, status = @status, professorId = @professorId, dataDeAtualizacao = @dataDeAtualizacao WHERE Id = @id";
@@ -219,6 +254,11 @@ namespace Repository
         }
 
 
+        /// <summary>
+        /// Obtém todas as disciplinas de uma determinada série.
+        /// </summary>
+        /// <param name="serie">A série das disciplinas a serem obtidas.</param>
+        /// <returns>Uma lista de disciplinas da série especificada.</returns>
         public List<DisciplinaModel> GetAllBySerie(int serie)
         {
             List<DisciplinaModel> disciplinas = new List<DisciplinaModel>();
@@ -260,6 +300,12 @@ namespace Repository
             return disciplinas;
         }
 
+
+        /// <summary>
+        /// Exclui todas as disciplinas associadas a um professor com base no ID do professor.
+        /// </summary>
+        /// <param name="teacherId">O ID do professor.</param>
+        /// <returns>True se as disciplinas foram excluídas com sucesso, False caso contrário.</returns>
         public bool DeleteByIdTeacher(int teacherId)
         {
             string query = "DELETE FROM Disciplinas WHERE professorId = @teacherId";
@@ -284,6 +330,13 @@ namespace Repository
             }
         }
 
+
+        /// <summary>
+        /// Atualiza o status de uma disciplina no banco de dados.
+        /// </summary>
+        /// <param name="status">O novo status da disciplina.</param>
+        /// <param name="disciplineId">O ID da disciplina a ser atualizada.</param>
+        /// <returns>True se a disciplina foi atualizada com sucesso, False caso contrário.</returns>
         public bool UpdateStatus(bool status, int disciplineId)
         {
             string query = @"UPDATE Disciplinas SET status = @status, dataDeAtualizacao = @dataDeAtualizacao WHERE Id = @id";

@@ -5,10 +5,24 @@ using System.Data.SqlClient;
 
 namespace Repository
 {
+    /// <summary>
+    /// Fornece funcionalidades de acesso para buscar o registrodo superusuário no banco de dados.
+    /// </summary>
     public class SARepository : ISARepository<SuperUserModel>
     {
-        private readonly string cs = "server=DESKTOP-MQADPEC\\SQLEXPRESS; database=DB_EscolaMJV; Trusted_Connection = true; Integrated Security=SSPI;TrustServerCertificate=True";
+        private readonly string cs = string.Empty;
 
+        public SARepository(string connectionString)
+        {
+            cs = connectionString;
+        }
+
+        /// <summary>
+        /// Verifica se um superusuário com as credenciais fornecidas existe no banco de dados.
+        /// </summary>
+        /// <param name="login">O login do superusuário.</param>
+        /// <param name="senha">A senha do superusuário.</param>
+        /// <returns>True se um superusuário com as credenciais fornecidas existir, False caso contrário.</returns>
         public bool Get(string login, string senha)
         {
             string query = "SELECT * FROM SuperUser WHERE login = @login AND senha = @senha";

@@ -7,7 +7,18 @@ namespace Repository
 {
     public class AlunoRepository : IUsuarioRepository<AlunoModel>
     {
-        private readonly string cs = "server=DESKTOP-MQADPEC\\SQLEXPRESS; database=DB_EscolaMJV; Trusted_Connection = true; Integrated Security=SSPI;TrustServerCertificate=True";
+        private readonly string cs = string.Empty;
+
+        public AlunoRepository(string connectionString) {
+            this.cs = connectionString;
+        }
+
+
+        /// <summary>
+        /// Cria um novo aluno no sistema.
+        /// </summary>
+        /// <param name="entity">Detalhes do aluno a ser criado.</param>
+        /// <returns>Indicação de sucesso ou falha.</returns>
         public bool Create(AlunoModel entity)
         {
             try
@@ -40,13 +51,40 @@ namespace Repository
             }
         }
 
+
+        /// <summary>
+        /// Exclui um aluno com base no ID.
+        /// </summary>
+        /// <param name="id">O ID do aluno a ser excluído.</param>
+        /// <returns>Indicação de sucesso ou falha.</returns>
         public bool Delete(int id)
         {
             string query = "DELETE FROM Alunos WHERE Id = @id";
-            string queryMatriculas = "DELETE FROM Matriculas WHERE alunosId = @id";
-            return CommandDelete(query, id);
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand(query, connection);
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    connection.Open();
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in AlunoRepository.Delete: {ex.Message}");
+                return false;
+            }
         }
 
+
+        /// <summary>
+        /// Obtém todos os alunos no sistema.
+        /// </summary>
+        /// <returns>Lista de alunos.</returns>
         public List<AlunoModel> GetAll()
         {
             List<AlunoModel> alunos = new List<AlunoModel>();
@@ -88,6 +126,12 @@ namespace Repository
             return alunos;
         }
 
+
+        /// <summary>
+        /// Obtém um aluno com base no ID.
+        /// </summary>
+        /// <param name="id">O ID do aluno a ser obtido.</param>
+        /// <returns>Detalhes do aluno.</returns>
         public AlunoModel GetById(int id)
         {
             AlunoModel aluno = new AlunoModel();
@@ -126,6 +170,11 @@ namespace Repository
             return aluno;
         }
 
+
+        /// <summary>
+        /// Atualiza os detalhes de um aluno existente.
+        /// </summary>
+        /// <param name="entity">Os novos detalhes do aluno.</param>
         public void Update(AlunoModel entity)
         {
             string query = "UPDATE Alunos SET nome = @nome, login = @login, email = @email, serie = @serie, dataDeAtualizacao = @dataDeAtualizacao WHERE Id = @id";
@@ -151,28 +200,6 @@ namespace Repository
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in AlunoRepository.Update: {ex.Message}");
-            }
-        }
-
-        private bool CommandDelete(string query, int id)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(cs))
-                {
-                    SqlCommand cmd = new SqlCommand(query, connection);
-
-                    cmd.Parameters.AddWithValue("@id", id);
-
-                    connection.Open();
-
-                    return cmd.ExecuteNonQuery() > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in AlunoRepository.Delete: {ex.Message}");
-                return false;
             }
         }
     }

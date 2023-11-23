@@ -17,7 +17,7 @@ namespace API.ProjetoEscola.Controllers
             _disciplinaRepository = disciplinaRepository;
         }
 
-
+        // Busca um professor no banco de dados com base no ID.
         [HttpGet]
         [Route("getbyid/{id}")]
         public IActionResult GetById(int id)
@@ -28,6 +28,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Busca todas os alunos do sistema.
         [HttpGet]
         [Route("getall")]
         public IActionResult GetAll()
@@ -41,7 +42,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
-
+        // Cria um novo professor no sistema.
         [HttpPost]
         [Route("create")]
         public IActionResult Create(ProfessorModel professor)
@@ -62,6 +63,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Atualiza os detalhes de um professor existente.
         [HttpPut]
         [Route("update")]
         public IActionResult Update(ProfessorModel professor)
@@ -82,6 +84,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Exclui um professor com base no ID.
         [HttpDelete]
         [Route("delete/{id}")]
         public IActionResult Delete(int id)

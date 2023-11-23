@@ -5,12 +5,15 @@ using ProjetoEscolaMJV.Models;
 
 namespace ProjetoEscolaMJV.Filters
 {
+    // <summary>
+    /// Filtro de ação que redireciona para a página de login se o usuário não estiver autenticado como aluno.
+    /// </summary>
     public class PaginaParaAlunoLogado : ActionFilterAttribute
     {
         /// <summary>
-        /// 
+        /// Executado antes de uma ação ser executada. Verifica se um aluno está autenticado e redireciona conforme necessário.
         /// </summary>
-        /// <param name="context"></param>
+        /// <param name="context">Contexto da execução da ação.</param>
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             string sessaoAluno = context.HttpContext.Session.GetString("sessaoAluno");
@@ -23,7 +26,9 @@ namespace ProjetoEscolaMJV.Filters
             }
             else
             {
-                AlunoModel aluno = JsonConvert.DeserializeObject<AlunoModel>(sessaoAluno);
+                AlunoModel aluno = null;
+
+                if (!string.IsNullOrEmpty(sessaoAluno)) aluno = JsonConvert.DeserializeObject<AlunoModel>(sessaoAluno);
 
                 if (aluno != null)
                 {
@@ -32,19 +37,15 @@ namespace ProjetoEscolaMJV.Filters
                 }
                 else
                 {
-                    // Redirecionar para páginas específicas para SuperUser ou Professor
-                    SuperUserModel superUser = JsonConvert.DeserializeObject<SuperUserModel>(sessaoSuperUSer);
-                    ProfessorModel professor = JsonConvert.DeserializeObject<ProfessorModel>(sessaoProfessor);
-
-                    if (professor != null)
+                    if (!string.IsNullOrEmpty(sessaoProfessor))
                     {
                         // Redirecionar para a página do Professor
-                        context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Professor" }, { "action", "Index" } });
+                        if (JsonConvert.DeserializeObject<ProfessorModel>(sessaoProfessor) != null) context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Professor" }, { "action", "Index" } });
                     }
-                    else if (superUser != null)
+                    else if (!string.IsNullOrEmpty(sessaoSuperUSer))
                     {
                         // Redirecionar para a página do SuperUser
-                        context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "SuperUser" }, { "action", "Home" } });
+                        if (JsonConvert.DeserializeObject<SuperUserModel>(sessaoSuperUSer) != null) context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "SuperUser" }, { "action", "Home" } });
                     }
                 }
             }

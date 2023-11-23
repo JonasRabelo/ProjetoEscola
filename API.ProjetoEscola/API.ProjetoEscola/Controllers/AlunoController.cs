@@ -19,6 +19,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Busca um aluno no banco de dados com base no ID.
         [HttpGet]
         [Route("getbyid/{id}")]
         public IActionResult GetById(int id)
@@ -28,7 +29,7 @@ namespace API.ProjetoEscola.Controllers
             return Ok(aluno);
         }
 
-
+        // Busca todas os alunos do sistema.
         [HttpGet]
         [Route("getall")]
         public IActionResult GetAll()
@@ -42,6 +43,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Cria um novo aluno no sistema.
         [HttpPost]
         [Route("create")]
         public IActionResult Create(AlunoModel aluno)
@@ -62,6 +64,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Atualiza os detalhes de um aluno existente.
         [HttpPut]
         [Route("update")]
         public IActionResult Update(AlunoModel aluno)
@@ -82,6 +85,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Exclui um aluno com base no ID.
         [HttpDelete]
         [Route("delete/{id}")]
         public IActionResult Delete(int id)

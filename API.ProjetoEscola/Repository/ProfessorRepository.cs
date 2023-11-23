@@ -6,7 +6,18 @@ namespace Repository
 {
     public class ProfessorRepository : IUsuarioRepository<ProfessorModel>
     {
-        private readonly string cs = "server=DESKTOP-MQADPEC\\SQLEXPRESS; database=DB_EscolaMJV; Trusted_Connection = true; Integrated Security=SSPI;TrustServerCertificate=True";
+        private readonly string cs = string.Empty;
+
+        public ProfessorRepository(string connectionString)
+        {
+            cs = connectionString;
+        }
+
+        /// <summary>
+        /// Cria um novo professor no sistema.
+        /// </summary>
+        /// <param name="entity">Detalhes do professor a ser criado.</param>
+        /// <returns>Indicação de sucesso ou falha.</returns>
         public bool Create(ProfessorModel entity)
         {
             try
@@ -37,14 +48,40 @@ namespace Repository
             }
         }
 
+
+        /// <summary>
+        /// Exclui um professor com base no ID, incluindo suas disciplinas associadas.
+        /// </summary>
+        /// <param name="id">O ID do professor a ser excluído.</param>
+        /// <returns>Indicação de sucesso ou falha.</returns>
         public bool Delete(int id)
         {
             string query = "DELETE FROM Professores WHERE Id = @id";
-            string queryDisciplinas = "DELETE FROM Disciplinas WHERE professorId = @id";
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(cs))
+                {
+                    SqlCommand cmd = new SqlCommand(query, connection);
 
-            return CommandDelete(queryDisciplinas, id) && CommandDelete(query, id);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    connection.Open();
+
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in ProfessorRepository.Delete: {ex.Message}");
+                return false;
+            }
         }
 
+
+        /// <summary>
+        /// Obtém todos os professores no sistema.
+        /// </summary>
+        /// <returns>Lista de professores.</returns>
         public List<ProfessorModel> GetAll()
         {
             List<ProfessorModel> professores = new List<ProfessorModel>();
@@ -85,6 +122,12 @@ namespace Repository
             return professores;
         }
 
+
+        /// <summary>
+        /// Obtém um professor com base no ID.
+        /// </summary>
+        /// <param name="id">O ID do professor a ser obtido.</param>
+        /// <returns>Detalhes do professor.</returns>
         public ProfessorModel GetById(int id)
         {
             ProfessorModel professor = new ProfessorModel();
@@ -121,6 +164,11 @@ namespace Repository
             return professor;
         }
 
+
+        /// <summary>
+        /// Atualiza os detalhes de um professor existente.
+        /// </summary>
+        /// <param name="entity">Os novos detalhes do professor.</param>
         public void Update(ProfessorModel entity)
         {
             string query = "UPDATE Professores SET nome = @nome, login = @login, email = @email, dataDeAtualizacao = @dataDeAtualizacao WHERE Id = @id";
@@ -145,28 +193,6 @@ namespace Repository
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in ProfessorRepository.Update: {ex.Message}");
-            }
-        }
-
-        private bool CommandDelete(string query, int id)
-        {
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(cs))
-                {
-                    SqlCommand cmd = new SqlCommand(query, connection);
-
-                    cmd.Parameters.AddWithValue("@id", id);
-
-                    connection.Open();
-
-                    return cmd.ExecuteNonQuery() > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in ProfessorRepository.Delete: {ex.Message}");
-                return false;
             }
         }
     }

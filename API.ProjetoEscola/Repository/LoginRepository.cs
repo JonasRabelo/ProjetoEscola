@@ -2,13 +2,25 @@
 using Models.Enums;
 using Repository.IRepository;
 using System.Data.SqlClient;
+using System.Drawing;
 
 namespace Repository
 {
     public class LoginRepository : ILoginRepository<LoginModel>
     {
-        private readonly string cs = "server=DESKTOP-MQADPEC\\SQLEXPRESS; database=DB_EscolaMJV; Trusted_Connection = true; Integrated Security=SSPI;TrustServerCertificate=True";
+        private readonly string cs = string.Empty;
 
+        public LoginRepository(string connectionString)
+        {
+            cs = connectionString;
+        }
+
+
+        /// <summary>
+        /// Obtém um aluno com base no login fornecido.
+        /// </summary>
+        /// <param name="entity">Modelo contendo informações de login.</param>
+        /// <returns>Um objeto AlunoModel se encontrado, ou um objeto AlunoModel vazio se não encontrado.</returns>
         public AlunoModel GetStudentByLogin(LoginModel entity)
         {
             AlunoModel aluno = new AlunoModel();
@@ -46,6 +58,12 @@ namespace Repository
             return aluno;
         }
 
+
+        /// <summary>
+        /// Obtém um professor com base no login fornecido.
+        /// </summary>
+        /// <param name="entity">Modelo contendo informações de login.</param>
+        /// <returns>Um objeto ProfessorModel se encontrado, ou um objeto ProfessorModel vazio se não encontrado.</returns>
         public ProfessorModel GetTeacherByLogin(LoginModel entity)
         {
             ProfessorModel professor = new ProfessorModel();
@@ -80,34 +98,6 @@ namespace Repository
                 Console.WriteLine($"Error in LoginRepository.GetTeacherByLogin: {ex.Message}");
             }
             return professor;
-        }
-
-        public bool UpdatePassword(LoginModel entity)
-        {
-            string queryAluno = "UPDATE Alunos SET senha = @senha WHERE Id = @id";
-            string queryProfessor = "UPDATE Professores SET senha = @senha WHERE Id = @id";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(cs))
-                {
-                    SqlCommand cmd;
-                    if (entity.Tipo == "Aluno") cmd = new SqlCommand(queryAluno, connection);
-                    else cmd = new SqlCommand(queryProfessor, connection);
-
-                    cmd.Parameters.AddWithValue("@senha", entity.Senha);
-                    cmd.Parameters.AddWithValue("@id", entity.Id);
-
-                    connection.Open();
-
-                    return cmd.ExecuteNonQuery() > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in LoginRepository.UpdatePassword: {ex.Message}");
-                return false;
-            }
         }
     }
 }

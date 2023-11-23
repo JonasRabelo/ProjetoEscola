@@ -74,11 +74,11 @@
         {
             <a class="btn btn-block botoes_dados" asp-controller="Aluno" asp-action="VerNotas" asp-route-disciplineId="@Model.Id" asp-route-studentId="@studentId" asp-route-nameTeacher="@Model.Professor.Nome" role="button">Ver Notas</a>
         }
-        else
+        else if(Model.Status)
         {
             <a class="btn btn-block botoes_dados" asp-controller="Aluno" asp-action="Matricular" asp-route-disciplineId="@Model.Id" asp-route-studentId="@studentId" role="button">Matricular</a>
         }
-        <a class="btn btn-block botoes_dados" asp-controller="Aluno" asp-action="Index" role="button">Voltar</a>
+        <a class="btn btn-block botoes_dados" asp-controller="Aluno" asp-action="Index" asp-route-id="@studentId" role="button">Voltar</a>
 
     </div>
 

@@ -5,8 +5,15 @@ using ProjetoEscolaMJV.Models;
 
 namespace ProjetoEscolaMJV.Filters
 {
+    // <summary>
+    /// Filtro de ação que redireciona para a página de login se o usuário não estiver autenticado como superusuário.
+    /// </summary>
     public class PaginaParaSuperUserLogado : ActionFilterAttribute
     {
+        /// <summary>
+        /// Executado antes de uma ação ser executada. Verifica se um superusuário está autenticado e redireciona conforme necessário.
+        /// </summary>
+        /// <param name="context">Contexto da execução da ação.</param>
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             string sessaoAluno = context.HttpContext.Session.GetString("sessaoAluno");
@@ -19,28 +26,25 @@ namespace ProjetoEscolaMJV.Filters
             }
             else
             {
-                SuperUserModel superUser = JsonConvert.DeserializeObject<SuperUserModel>(sessaoSuperUSer);
+                SuperUserModel superUser = null;
+                if (!string.IsNullOrEmpty(sessaoSuperUSer)) superUser = JsonConvert.DeserializeObject<SuperUserModel>(sessaoSuperUSer);
 
                 if (superUser != null)
                 {
-                    // SuperUser autenticado, permitir acesso à página
+                    // Professor autenticado, permitir acesso à página
                     base.OnActionExecuting(context);
                 }
                 else
                 {
-                    // Redirecionar para páginas específicas para Professor ou Aluno
-                    ProfessorModel professor = JsonConvert.DeserializeObject<ProfessorModel>(sessaoProfessor);
-                    AlunoModel aluno = JsonConvert.DeserializeObject<AlunoModel>(sessaoAluno);
-
-                    if (professor != null)
-                    {
-                        // Redirecionar para a página do Professor
-                        context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Professor" }, { "action", "Index" } });
-                    }
-                    else if (superUser != null)
+                    if (!string.IsNullOrEmpty(sessaoAluno))
                     {
                         // Redirecionar para a página do Aluno
-                        context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Aluno" }, { "action", "Index" } });
+                        if (JsonConvert.DeserializeObject<AlunoModel>(sessaoAluno) != null) context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Aluno" }, { "action", "Index" } });
+                    }
+                    else if (!string.IsNullOrEmpty(sessaoProfessor))
+                    {
+                        // Redirecionar para a página do SuperUser
+                        if (JsonConvert.DeserializeObject<ProfessorModel>(sessaoProfessor) != null) context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "SuperUser" }, { "action", "Home" } });
                     }
                 }
             }

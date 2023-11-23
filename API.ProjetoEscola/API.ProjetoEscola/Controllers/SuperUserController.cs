@@ -17,11 +17,13 @@ namespace API.ProjetoEscola.Controllers
             _saRepository = sARepository;
         }
 
+        // Obtém um superusuário pelo login e senha.
         [HttpGet]
         [Route("get")]
-        public IActionResult GetById([FromQuery] SuperUserModel superUser)
+        public IActionResult Get([FromQuery] SuperUserModel superUser)
         {
-             return Ok(_saRepository.Get(superUser.Login, superUser.Senha));
+            // Chama o método do repositório para obter um superusuário pelo login e senha.
+            return Ok(_saRepository.Get(superUser.Login, superUser.Senha));
         }
 
     }

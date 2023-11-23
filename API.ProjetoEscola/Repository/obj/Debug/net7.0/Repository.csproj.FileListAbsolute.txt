@@ -28,3 +28,4 @@ J:\ProjetoEscola\API.ProjetoEscola\Repository\obj\Debug\net7.0\Repository.dll
 J:\ProjetoEscola\API.ProjetoEscola\Repository\obj\Debug\net7.0\refint\Repository.dll
 J:\ProjetoEscola\API.ProjetoEscola\Repository\obj\Debug\net7.0\Repository.pdb
 J:\ProjetoEscola\API.ProjetoEscola\Repository\obj\Debug\net7.0\ref\Repository.dll
+J:\ProjetoEscola\API.ProjetoEscola\Repository\obj\Debug\net7.0\Repository.sourcelink.json

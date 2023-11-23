@@ -22,6 +22,8 @@ namespace API.ProjetoEscola.Controllers
             _disciplinaRepository = disciplinaRepository;
         }
 
+
+        // Obtém uma matrícula pelo ID, incluindo detalhes do aluno e disciplina associados.
         [HttpGet]
         [Route("getbyid/{id}")]
         public IActionResult GetById(int id)
@@ -33,6 +35,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Obtém todas as matrículas, incluindo detalhes do aluno e disciplina associados.
         [HttpGet]
         [Route("getall")]
         public IActionResult GetAll()
@@ -47,6 +50,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Obtém todas as matrículas de um aluno específico, incluindo detalhes do aluno e disciplina associados.
         [HttpGet]
         [Route("getallbyidstudent/{id}")]
         public IActionResult GetAllByIdStudent(int id)
@@ -61,6 +65,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Obtém todas as matrículas de uma disciplina específica, incluindo detalhes do aluno e disciplina associados.
         [HttpGet]
         [Route("getallbyiddiscipline/{id}")]
         public IActionResult GetAllByIdDiscipline(int id)
@@ -75,6 +80,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Cria uma nova matrícula.
         [HttpPost]
         [Route("create")]
         public IActionResult Create(MatriculaModel matricula)
@@ -95,6 +101,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Atualiza uma matrícula existente.
         [HttpPut]
         [Route("update")]
         public IActionResult Update(MatriculaModel matricula)
@@ -113,8 +120,9 @@ namespace API.ProjetoEscola.Controllers
                 return StatusCode(500, $"Error in MatriculaController.Update: {ex.Message}");
             }
         }
-        
 
+
+        // Exclui uma matrícula pelo ID.
         [HttpDelete]
         [Route("delete/{id}")]
         public IActionResult Delete(int id)
@@ -125,6 +133,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Exclui todas as matrículas de um aluno pelo ID do aluno.
         [HttpDelete]
         [Route("deletebyidstudent/{id}")]
         public IActionResult DeleteByIdStudent(int id)
@@ -135,6 +144,7 @@ namespace API.ProjetoEscola.Controllers
         }
 
 
+        // Exclui todas as matrículas de uma disciplina pelo ID da disciplina.
         [HttpDelete]
         [Route("deletebyiddiscipline/{id}")]
         public IActionResult DeleteByIdDiscipline(int id)
